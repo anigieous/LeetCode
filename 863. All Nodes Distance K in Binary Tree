@@ -1,0 +1,66 @@
+class Solution {
+public:
+    
+    
+    void findSubtreeDistK(vector<int>& rst, TreeNode *root, int target, int k) {
+        if (!root) {
+            return ;
+        } else if (k == 0) {
+            rst.push_back(root->val);
+            return;
+        } else if (k < 0) {
+            return ;
+        }
+        
+        findSubtreeDistK(rst, root->left, target, k - 1);
+        findSubtreeDistK(rst, root->right, target, k - 1);
+    }
+    
+    bool findPath(TreeNode *root, vector<TreeNode*>& path, int target) {
+        if (!root) {
+            return false;
+        }
+        
+        path.push_back(root);
+        if (root->val == target) {
+            return true;
+        }
+        
+        if (findPath(root->left, path, target) || 
+            findPath(root->right, path, target)) {
+            return true;
+        }
+        
+        path.pop_back();
+        return false;
+    }
+    
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        vector<int> res;
+         if (root == nullptr) {
+            return res;
+        } else if (k == 0) {
+            return {target->val};
+        }
+        vector<TreeNode*> path;
+        // findPath must be true
+        findPath(root, path, target->val);
+        findSubtreeDistK(res, path.back()->left, target->val, k - 1);
+        findSubtreeDistK(res, path.back()->right, target->val, k - 1);
+        
+		// from path.size() - 2 since path.size() - 1 is the target node.
+        for (int i = path.size() - 2; i >= 0; --i) {
+            --k;
+            if (k == 0) {
+                res.push_back(path[i]->val); 
+                break; // we are done. Do not need to search back.
+            } else if (path[i]->left != path[i+1]) {
+				// compare with path[i+1] to avoid to access the visited node.
+                findSubtreeDistK(res, path[i]->left, target->val, k - 1);
+            } else if (path[i]->right != path[i+1]) {
+                findSubtreeDistK(res, path[i]->right, target->val, k - 1);
+            }
+        }
+        return res;
+    }
+};
