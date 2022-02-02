@@ -1,0 +1,35 @@
+class Solution {
+public:
+    void letterCombination(vector<string> &result, string digits, string substr, int index, string phoneButton[]){
+        //base case        
+        //storing current substr in result
+        if(index>=digits.length()){
+            result.push_back(substr);
+            return;
+        }
+        int num = digits[index] - '0';
+        //get the number equivalent of string we received as => '2'-'0' = 2(numeric)
+        string str = phoneButton[num];
+        
+        for(int i=0;i<str.length();i++){
+            substr.push_back(str[i]);
+            //recursive call
+            letterCombination(result, digits, substr, index+1, phoneButton);
+            //backtracking
+            substr.pop_back();
+        }
+    }
+                      
+    vector<string> letterCombinations(string digits) {
+        vector<string> result;
+        if(digits.length() == 0){
+            return result;
+        }
+        string phoneButton[10] = {"","","abc","def","ghi","jlk","mno","pqrs","tuv","wxyz"};
+        int index = 0;
+        string substr = "";
+        letterCombination(result, digits, substr, index, phoneButton);
+        return result;
+        
+    }
+};
