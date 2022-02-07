@@ -1,0 +1,39 @@
+class Solution {
+public:
+    
+    int dp[55][55][55];
+    int mod = 1000000007;
+    int rec(int m, int n, int maxMove, int i, int j){
+        //base condition
+        if(i < 0 || i >= m || j < 0 || j >= n){
+            return 1;
+        }
+        if(maxMove == 0){
+            return 0;
+        }
+        if(dp[i][j][maxMove] != -1){
+            return dp[i][j][maxMove]%mod;
+        }
+        
+        int dx[] = {-1,0,0,1};
+        int dy[] = {0,-1,1,0};
+        int ans = 0;
+        for(int ind=0;ind<4;ind++){
+            int x = i + dx[ind];
+            int y = j + dy[ind];
+            ans = (ans%mod + rec( m, n, maxMove-1, x, y)%mod)%mod;
+        }
+        
+        return dp[i][j][maxMove] = ans%mod;
+    }
+    int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
+        for(int i = 0;i< 55;i++){
+            for(int j = 0;j<55;j++){
+                for(int k = 0;k<55;k++){
+                    dp[i][j][k] = -1.0;
+                }
+            }
+        }
+        return (rec(m, n, maxMove, startRow, startColumn)%mod);
+    }
+};
