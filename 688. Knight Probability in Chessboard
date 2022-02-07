@@ -1,0 +1,39 @@
+class Solution {
+public:
+    double dp[27][27][105];
+    double rec(int n, int k, int row, int col){
+        
+        
+        //base condition
+        if(row < 0 || row >= n || col < 0 || col >= n){
+            return 0.0;
+        }
+        if(k == 0){
+            return 1.0;
+        }
+        if(dp[row][col][k] != -1.0){
+            return dp[row][col][k];
+        }
+        int dx[] = {-1,-2,-2,-1,1,2,2,1};
+        int dy[] = {-2,-1,1,2,-2,-1,1,2};
+        double ans = 0.0;
+        for(int i = 0;i<8;i++){
+            int nextx = row + dx[i];
+            int nexty = col + dy[i];
+            ans = ans + rec(n, k-1, nextx, nexty)/8.0;
+        }
+        
+        return dp[row][col][k] = ans;
+    }
+    double knightProbability(int n, int k, int row, int col) {
+        for(int i = 0;i< 27;i++){
+            for(int j = 0;j<27;j++){
+                for(int k = 0;k<105;k++){
+                    dp[i][j][k] = -1.0;
+                }
+            }
+        }
+        double ans = rec(n, k, row, col);
+        return ans;
+    }
+};
