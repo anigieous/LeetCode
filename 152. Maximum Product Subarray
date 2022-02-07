@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int maxi = INT_MIN, maxCurrent = 1;
+    // Kadane's Algorithm(look for positive values)
+    for (int i = 0; i < nums.size(); i++)
+    {
+        maxCurrent = maxCurrent * nums[i];
+        maxi = max(maxi, maxCurrent);
+
+        if(nums[i]==0)
+            maxCurrent=1;
+    }
+        maxCurrent = 1;
+        // this loop is for corner cases where last element itself is the max product like[3 , -1 , 4]
+        for(int i = nums.size()-1 ; i>=0 ; i--){
+         maxCurrent *= nums[i];
+         maxi = max(maxi , maxCurrent);
+         
+         if(nums[i]==0)
+             maxCurrent = 1;
+     }
+    return maxi;
+    }
+};
