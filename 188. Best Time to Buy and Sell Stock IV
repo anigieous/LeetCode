@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int rec(vector<int> &prices, int i, int hold, int k,vector<vector<vector<int>>>&dp){
+        if(i >= prices.size()){
+            return 0;
+        }
+         if(k<=0) 
+             return rec(prices,i+1,hold,k,dp);
+        if(dp[i][k][hold] != -1){
+            return dp[i][k][hold];
+        }
+        
+        if(hold == 0){
+            int op1 = rec(prices, i+1, 1,  k,dp) - prices[i];
+            int op2 = rec(prices, i+1,hold, k,dp);
+            return dp[i][k][hold] = max(op1,op2);
+        }else if(hold == 1){
+            //prices[idx]+solve(prices,idx+1,0,k-1,dp),solve(prices,idx+1,tran,k,dp)
+            int op1 = prices[i] + rec(prices, i+1, 0, k-1,dp);
+            int op2 = rec(prices, i+1,hold, k,dp);
+            return dp[i][k][hold] = max(op1,op2);
+        }  
+        return 0;
+    }
+    int maxProfit(int k, vector<int>& prices) {
+          vector<vector<vector<int>>>dp(prices.size()+1,vector<vector<int>>(k+1,vector<int>(2,-1)));
+        int ans = rec(prices, 0, 0, k,dp);
+        return ans;
+    }
+};
