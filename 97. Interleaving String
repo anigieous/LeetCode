@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int dp[105][105];
+    bool rec(string &s1, string &s2, string &s3, int i, int j, int k, int l1, int l2, int l3){
+        if(k >= l3){
+            return 1;
+        }
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+        bool ans = 0;
+        if(i<l1 && s1[i] == s3[k]){
+            ans = ans | rec(s1,s2,s3,i+1,j,k+1,l1,l2,l3);
+        }
+        if(j<l2 && s2[j] == s3[k]){
+            ans = ans | rec(s1,s2,s3,i,j+1,k+1,l1,l2,l3);
+        }
+        return dp[i][j] = ans;
+    }
+    bool isInterleave(string s1, string s2, string s3) {
+        int l1 = s1.length();
+        int l2 = s2.length();
+        int l3 = s3.length();
+        if(l1+l2 != l3){
+            return 0;
+        }
+        if(l1 == 0){
+            return s2 == s3;
+        }
+        if(l2 == 0){
+            return s1 == s3;
+        }
+        for(int i=0;i<105;i++){
+            for(int j=0;j<105;j++){
+                dp[i][j] = -1;
+            }
+        }
+        
+        int ans = rec(s1,s2,s3,0,0,0,l1,l2,l3);
+        return ans;
+        
+    }
+};
