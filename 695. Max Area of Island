@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int count,n,m;
+    bool visited[52][52];
+    void dfs( vector<vector<int>>& grid, int i, int j){
+        if(i < 0 || j < 0 || i >= n || j >= m || !grid[i][j] || visited[i][j]) return;        
+        count++;
+        visited[i][j] = true;
+        int dx[] = {-1,0,0,1};
+        int dy[] = {0,-1,1,0};
+        for(int k =0;k<4;k++){
+            int x = i + dx[k];
+            int y = j + dy[k];
+            dfs( grid, x, y);
+        }
+    }
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        memset(visited, false, sizeof(visited));
+        n = grid.size();
+        m = grid[0].size();
+        int ans = 0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j] && !visited[i][j] ){
+                    count = 0;
+                    dfs( grid, i, j);
+                    ans = max(ans,count);
+                }
+            }
+        }
+        return ans;
+    }
+};
