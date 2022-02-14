@@ -1,0 +1,23 @@
+class Solution {
+public:
+    
+    int helper(vector<int>& coins, vector<vector<int>> &dp, int amount, int index){
+        if(amount < 0 || index >= coins.size()){
+            return 100005;
+        }
+        if(amount == 0){
+            return 0;
+        }
+        if(dp[index][amount] != -1){
+            return dp[index][amount];
+        }
+        return dp[index][amount] = min(1+helper(coins, dp, amount - coins[index], index), 
+                                       helper(coins, dp, amount, index+1));
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        vector<vector<int>> dp(coins.size()+5,vector<int>(amount+5,-1));
+        int ans = helper(coins, dp, amount, 0);
+        return (ans == 100005) ? -1 : ans;
+        
+    }
+};
