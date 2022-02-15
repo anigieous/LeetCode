@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void generateParenthesis(vector<string> &result, string substr, int open, int close){
+        if(open>close){
+            return ;
+        }
+        if(open == 0 && close == 0){
+            result.push_back(substr);
+        }
+        if(open>0){
+        substr.push_back('(');
+        generateParenthesis(result,substr,open-1,close);
+        substr.pop_back();
+        }
+        if(open<close){
+        substr.push_back(')');
+        generateParenthesis(result,substr,open,close-1);
+        substr.pop_back();
+        }
+    }
+    vector<string> generateParenthesis(int n) {
+        vector<string> result;
+        string substr = "";
+        generateParenthesis(result,substr,n,n);
+        return result;
+        
+    }
+};
