@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<vector<int>> res;
+    void recursive(vector<int> nums, int target, int index, vector<int> resSoFar){
+        if(index > nums.size() || target < 0) return;
+        if(target == 0) {
+            res.push_back(resSoFar);
+            return;
+        }
+        for(int i = index;i<nums.size();i++){
+            if(i > index && nums[i] == nums[i-1]){
+                continue;
+            }
+            resSoFar.push_back(nums[i]);
+            recursive(nums, target-nums[i], i+1, resSoFar);
+            resSoFar.pop_back();
+        }
+    }
+    vector<vector<int>> combinationSum2(vector<int>& nums, int target) {
+        int n=nums.size(); if(!n) return res;
+        sort(nums.begin(), nums.end());
+        vector<int> tmp;
+        recursive(nums, target, 0, tmp);
+        return res;
+    }
+};
