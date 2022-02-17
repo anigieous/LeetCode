@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool isHappy(int n) {
+        if(n == 1){
+            return true;
+        }
+        if(n==89){
+                return false;
+        }
+        int temp = n;
+        n=0;
+        while(temp != 0){
+            int mod = temp %10;
+            n = n+pow(mod,2);
+            temp /= 10;
+        }
+        return isHappy(n);
+    }
+};
