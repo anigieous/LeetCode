@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void helper(string s, string stringSoFar,vector<string> &res, int index){
+        if(index == s.size()){
+            res.push_back(stringSoFar);
+            return;
+        }
+        if(isdigit(s[index])) {
+            helper(s, stringSoFar+s[index], res, index+1);
+        }
+        else if(s[index]>= 'a' && s[index] <= 'z'){
+            char ch = s[index]-32;
+            helper(s, stringSoFar+ch, res, index+1);
+            helper(s, stringSoFar+s[index], res, index+1);
+        }else if(s[index]>= 'A' && s[index] <= 'Z'){
+            char ch = s[index]+32;
+            helper(s, stringSoFar+ch, res, index+1);
+            helper(s, stringSoFar+s[index], res, index+1);
+        }
+    }
+    
+    vector<string> letterCasePermutation(string s) {
+        int n = s.size();
+        vector<string> res;
+        helper(s, "", res, 0);
+        return res;
+    }
+};
