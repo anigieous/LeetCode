@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int rob(vector<int> &nums, vector<int> &dp, int index){
+        if(index >= nums.size()) return 0;
+        if(dp[index] != -1) return dp[index];
+        return dp[index] = max(rob(nums, dp, index+1), nums[index] + rob(nums, dp, index+2));
+    }
+    int rob(vector<int>& nums) {
+        vector<int> dp(nums.size()+1, -1);
+        return rob(nums, dp, 0);
+    }
+};
