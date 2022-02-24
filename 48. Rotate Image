@@ -1,0 +1,14 @@
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        vector<vector<int>> temp(matrix.size(), vector<int>(matrix[0].size(),0));
+        int ti = matrix.size()-1;
+        int tj = 0;
+        for(int i = 0;i<matrix.size();i++,ti--){
+            for(int j=0,tj=0;j<matrix[0].size();j++,tj++){
+                temp[tj][ti] = matrix[i][j];
+            }
+        }
+        matrix = temp;
+    }
+};
