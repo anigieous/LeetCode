@@ -1,0 +1,12 @@
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        vector<vector<string>> str;
+        int n = s1.size();
+        for (int i = 0; i < n; i++)
+        for (int len = 1; len <= n - i; len++)
+            str.push_back(s.substr(i, len));
+        
+        
+    }
+};
