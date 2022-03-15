@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int dp[101][2];
+    int rob(vector<int> &nums, int index, bool isValid,int n){
+        if(index >= n){
+            return 0;
+        }
+        if(dp[index][isValid] != -1){
+            return dp[index][isValid];
+        }
+        int robb = 0, nrob = 0;
+        if(isValid){
+            robb = nums[index] + rob(nums,index+1,false, n);
+        }
+        nrob  = rob(nums,index+1,true,n);
+        return dp[index][isValid] = max(robb,nrob);
+    }
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        if (n == 1) return nums[0];
+        memset(dp,-1,sizeof(dp));
+        int case1 = rob(nums,0,true,n-1);
+		
+        memset(dp,-1,sizeof(dp));
+        int case2 = rob(nums,1,true,n);
+        return max(case1,case2);
+    }
+};
